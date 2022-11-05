@@ -15,7 +15,7 @@ const Navbar: NextPage<Props> = ({ currentPage }) => {
         {/* replace with logo */}
         <div className="flex justify-center w-7/12">
           {links_loggedOut.map(({ url, label }) => (
-            <Link href={url}>
+            <Link key={label} href={url}>
               {currentPage === label ? (
                 <a className="mr-10 font-bold">{label}</a>
               ) : (
