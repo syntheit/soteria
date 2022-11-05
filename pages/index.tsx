@@ -2,9 +2,8 @@ import type { NextPage } from "next";
 import Layout from "../components/Layout/Layout";
 import Navbar from "../components/Navbar/Navbar";
 
-const metadata: { title: string; defaultDescription: boolean } = {
+const metadata: { title: string } = {
   title: "Clowncar",
-  defaultDescription: true,
 };
 
 interface Props {}

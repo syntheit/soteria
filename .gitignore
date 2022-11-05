@@ -7,3 +7,4 @@ out
 .github
 .idea
 /.eslintrc.json
+firebase.ts

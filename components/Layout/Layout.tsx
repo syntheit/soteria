@@ -12,16 +12,13 @@ export default ({ children, metadata }) => {
         {metadata.description ? (
           <meta name="description" content={metadata.description} />
         ) : (
-          ""
-        )}
-        {metadata.defaultDescription ? (
           <meta name="description" content={defaultDescription} />
-        ) : (
-          ""
         )}
       </Head>
-      <main className={styles.main}>
-        <div className={styles.wrapper}>{children}</div>
+      <main className="flex justify-center">
+        <div className="flex justify-center items-center flex-col w-full">
+          {children}
+        </div>
       </main>
     </div>
   );

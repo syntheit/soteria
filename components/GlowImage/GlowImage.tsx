@@ -3,7 +3,7 @@ import { NextPage } from "next";
 
 interface Props {
   src: string;
-  className: string;
+  className?: string;
 }
 
 const GlowImage: NextPage<Props> = ({ src, className }) => {
