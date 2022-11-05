@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "reset.scss";
+@font-face {
+  font-family: "Mulish";
+  src: url("../public/fonts/Mulish-VariableFont.ttf") format("truetype");
+  font-weight: 1 999;
+}
+@font-face {
+  font-family: "Mulish";
+  src: url("../public/fonts/Mulish-Italic-VariableFont.ttf") format("truetype");
+  font-weight: 1 999;
+  font-style: italic;
+}
+@font-face {
+  font-family: "RedHatDisplay";
+  src: url("../public/fonts/RedHatDisplay-VariableFont.ttf") format("truetype");
+  font-weight: 1 999;
+}
+@font-face {
+  font-family: "RedHatDisplay";
+  src: url("../public/fonts/RedHatDisplay-Italic-VariableFont.ttf")
+    format("truetype");
+  font-weight: 1 999;
+  font-style: italic;
+}
+body, html {
+  font-family: RedHatDisplay;
+  height: 100vh;
+}

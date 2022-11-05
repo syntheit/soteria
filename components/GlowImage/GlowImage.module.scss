@@ -1,0 +1,16 @@
+.container {
+  position: relative;
+}
+
+.foregroundImage {
+  position: relative;
+  z-index: 2;
+}
+
+.backgroundImage {
+  position: absolute;
+  top: .5rem;
+  transform: scale(1.08);
+  z-index: 1;
+  filter: blur(12px);
+}
