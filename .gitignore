@@ -6,3 +6,4 @@ lib/dist
 out
 .github
 .idea
+/.eslintrc.json
