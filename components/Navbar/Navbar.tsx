@@ -3,16 +3,18 @@ import { NextPage } from "next";
 import Link from "next/link";
 import { links_loggedOut } from "../../constants/Links";
 import { auth } from "../../firebase";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 
 interface Props {
   currentPage: string;
 }
 
 const Navbar: NextPage<Props> = ({ currentPage }) => {
-  auth.onAuthStateChanged((user) => {
-    user ? setSignedIn(true) : setSignedIn(false);
-  });
+  useEffect(() =>
+    auth.onAuthStateChanged((user) => {
+      user ? setSignedIn(true) : setSignedIn(false);
+    })
+  );
 
   const [signedIn, setSignedIn]: [boolean, Dispatch<SetStateAction<boolean>>] =
     useState(auth.currentUser ? true : false);
