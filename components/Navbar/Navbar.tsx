@@ -26,7 +26,7 @@ const Navbar: NextPage<Props> = ({ currentPage }) => {
   return (
     <div className="flex flex-col w-full mb-10">
       <div className="flex items-center justify-between h-16 pr-8 pl-10">
-        <h2 className="w-2/12">Clowncar</h2>
+        <Link href="/" className="w-2/12">Clowncar</Link>
         {/* replace with logo */}
         <div className="flex justify-center w-8/12">
           {links_loggedOut.map(({ url, label }) => (
