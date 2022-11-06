@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import Layout from "../components/Layout/Layout";
 import Navbar from "../components/Navbar/Navbar";
 import { errors_authentication } from "../constants/Errors";
+import {NextRouter, useRouter} from 'next/router'
 
 import { useEffect, useState } from "react";
 import { auth, db } from "../firebase";
@@ -23,6 +24,7 @@ const Register: NextPage<Props> = () => {
   const [name, setName] = useState<string>("");
   const [error, setError] = useState<string>("");
   const [schools, setSchools] = useState<{ label: string; value: string }[]>();
+  const router: NextRouter = useRouter();
 
   const create = () => {
     if (!schoolId) return;
@@ -38,9 +40,12 @@ const Register: NextPage<Props> = () => {
         await setDoc(doc(db, `schools/${schoolId}/users`, user.uid), {
           name,
         });
+
+        await router.push("/");
       })
       .catch(({ code }) => {
         setError(code);
+        return;
       });
   };
 
@@ -55,7 +60,7 @@ const Register: NextPage<Props> = () => {
   };
 
   useEffect(() => {
-    schools ? "" : getSchools();
+    !schools && getSchools();
   });
 
   return (
@@ -87,7 +92,7 @@ const Register: NextPage<Props> = () => {
                 }}
             />
             {/* dropdown with current schools */}
-            <p className="font-medium m-3 content-center">{errors_authentication[error] ? "ERROR: " + errors_authentication[error] : "ERROR: Internal error occurred."}</p>
+            <p className="font-medium m-3 content-center">{errors_authentication[error] ? "ERROR: " + errors_authentication[error] : error}</p>
             {/*<p className="font-medium m-3 content-center cursor-pointer">Select your school:</p>*/}
             {schools && (
                 <Dropdown

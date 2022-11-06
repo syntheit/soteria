@@ -6,8 +6,7 @@ import { getStorage, ref, uploadBytes } from "firebase/storage";
 import { auth, db } from "../firebase"
 import { collection, doc, setDoc, getDoc, DocumentReference, DocumentData, Timestamp } from "firebase/firestore";
 import 'react-calendar/dist/Calendar.css';
-
-const storage = getStorage();
+import { storage } from '../firebase'
 
 const metadata: { title: string; defaultDescription: boolean } = {
     title: "New Post",
@@ -29,7 +28,7 @@ class Post {
 const NewPost: NextPage<Props> = () => {
     const [location, setLocation]: [string, Dispatch<SetStateAction<string>>] = useState("");
     const [description, setDescription]: [string, Dispatch<SetStateAction<string>>] = useState("");
-    const [images, setImages] = useState(null) as unknown as [FileList, Dispatch<SetStateAction<FileList>>];
+    const [images, setImages] = useState<FileList>();
     const [startDate, setStartDate]: [string, Dispatch<SetStateAction<string>>] = useState("");
     const [endDate, setEndDate]: [string, Dispatch<SetStateAction<string>>] = useState("");
 
@@ -50,14 +49,14 @@ const NewPost: NextPage<Props> = () => {
             end_time: Timestamp.fromDate(new Date(endDate)),
             post_date: Timestamp.now(),
             location: location,
-            images: images && images instanceof FileList ? Array.from(images).map(file => `images/${uid}/${newDoc.id}/${file.name}`) : [],
+            images: images instanceof FileList ? Array.from(images).map(file => `images/${uid}/${newDoc.id}/${file.name}`) : [],
             uid: uid
         };
 
         await setDoc(newDoc, post);
         await setDoc(postsDoc, post);
 
-        if (images && images instanceof FileList) {
+        if (images instanceof FileList) {
             Array.from(images).forEach(file => uploadBytes(ref(storage, `images/${uid}/${newDoc.id}/${file.name}`), file).then((_) => {
                 console.log('Uploaded a blob or file!');
             }));
@@ -65,32 +64,15 @@ const NewPost: NextPage<Props> = () => {
     }
 
     const uploadToServer = async () => {
-        if (auth.currentUser !== null) {
-            const uid: string = auth.currentUser.uid;
-            const userRef: DocumentReference<DocumentData> = doc(db, "users", uid);
+        if (!auth.currentUser) return;
 
-            const userSnap = await getDoc(userRef);
+        const uid: string = auth.currentUser.uid;
+        const userSnap = await getDoc(doc(db, "users", uid));
 
-            if (userSnap.exists()) {
-                console.log("User data:", userSnap.data());
+        if (!userSnap.exists()) return;
 
-                const schoolRef = doc(db, "schools", userSnap.data().school);
-
-                const schoolSnap = await getDoc(schoolRef);
-
-                if (schoolSnap.exists()) {
-                    console.log("School data:", schoolSnap.data());
-
-                    await makeUserPost(schoolSnap.id, uid);
-                } else {
-                    console.log("No such school!");
-                }
-            } else {
-                console.log("No such user!");
-            }
-        } else {
-            console.log("Not logged in");
-        }
+        const schoolSnap = await getDoc(doc(db, "schools", userSnap.data().school))
+        await makeUserPost(schoolSnap.id, uid);
     }
 
     return (

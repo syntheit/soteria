@@ -6,6 +6,7 @@ import Navbar from "../components/Navbar/Navbar";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useState } from "react";
 import { auth } from "../firebase";
+import {NextRouter, useRouter} from "next/router";
 
 const metadata: { title: string; description: string } = {
   title: "Login | Soteria",
@@ -18,10 +19,13 @@ const Login: NextPage<Props> = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string>("");
+  const router: NextRouter = useRouter();
 
   const login = () => {
     signInWithEmailAndPassword(auth, email, password)
-      .then(() => {})
+      .then(() => {
+          router.push("/");
+      })
       .catch((error) => {
         const errorCode = error.code;
         setError(errorCode);
