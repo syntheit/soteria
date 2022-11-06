@@ -1,27 +1,19 @@
-import Head from "next/head";
 import styles from "./Layout.module.scss";
+import { NextSeo } from "next-seo";
 
 export const defaultDescription = "One man's trash is another man's treasure";
 
 const Layout = ({ children, metadata }) => {
-    return (
-        <div className={styles.container}>
-            <Head>
-                <title>{metadata.title}</title>
-                <link rel="icon" href="/favicon.ico" />
-                {metadata.description ? (
-                    <meta name="description" content={metadata.description} />
-                ) : (
-                    <meta name="description" content={defaultDescription} />
-                )}
-            </Head>
-            <main className="flex justify-center">
-                <div className="flex justify-center items-center flex-col w-full">
-                    {children}
-                </div>
-            </main>
+  return (
+    <div className={styles.container}>
+      <NextSeo {...metadata} />
+      <main className="flex justify-center">
+        <div className="flex justify-center items-center flex-col w-full">
+          {children}
         </div>
-    );
+      </main>
+    </div>
+  );
 };
 
-export default Layout
+export default Layout;

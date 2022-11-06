@@ -27,10 +27,12 @@ const Navbar: NextPage<Props> = ({ currentPage }) => {
   return (
     <div className="flex items-center flex-col w-full mb-10">
       <div className="flex w-11/12 justify-between items-center h-16">
-        <Link href="/" className="ml-10">
-          Soteria
+        <Link href="/">
+          <div className="flex items-center cursor-pointer">
+            <img className="h-12" src="/favicon-192.png" />
+            <p className="ml-4">Soteria</p>
+          </div>
         </Link>
-        {/* replace with logo */}
         <div className="flex items-center justify-center select-none">
           <div className="flex justify-center">
             {links_loggedOut[0].map(({ url, label }) => (
@@ -43,7 +45,7 @@ const Navbar: NextPage<Props> = ({ currentPage }) => {
               </Link>
             ))}
           </div>
-          <GlowButton url="/new-post" label="New Post" />
+          {signedIn && <GlowButton url="/new-post" label="New Post" />}
           <div className="flex justify-center">
             {links_loggedOut[1].map(({ url, label }) => (
               <Link key={label} href={url}>
@@ -55,13 +57,15 @@ const Navbar: NextPage<Props> = ({ currentPage }) => {
               </Link>
             ))}
           </div>
-          <Link href={`${auth.currentUser?.uid}/posts`}>
-            {currentPage === "posts" ? (
-              <a className="ml-5 mr-5 font-bold">My Posts</a>
-            ) : (
-              <a className="mr-5 ml-5">My Posts</a>
-            )}
-          </Link>
+          {signedIn && (
+            <Link href={`${auth.currentUser?.uid}/posts`}>
+              {currentPage === "posts" ? (
+                <a className="ml-5 mr-5 font-bold">My Posts</a>
+              ) : (
+                <a className="mr-5 ml-5">My Posts</a>
+              )}
+            </Link>
+          )}
         </div>
         <div className="mr-10">
           {signedIn ? (

@@ -5,10 +5,7 @@ import Feed from "../pages/feed";
 import { auth } from "../firebase";
 import Splash from "./splash";
 import { useEffect, useState } from "react";
-
-const metadata: { title: string } = {
-  title: "Soteria",
-};
+import { index } from "../constants/metadata";
 
 interface Props {}
 
@@ -21,7 +18,7 @@ const Home: NextPage<Props> = () => {
   );
 
   return (
-    <Layout metadata={metadata}>
+    <Layout metadata={index}>
       <Navbar currentPage="Home" />
       {signedIn === 1 && <Feed />}
       {signedIn === 0 && <Splash />}
