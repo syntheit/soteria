@@ -1,9 +1,9 @@
-import type {NextPage} from "next";
+import type { NextPage } from "next";
 import Layout from "../components/Layout/Layout";
 import Navbar from "../components/Navbar/Navbar";
 import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import { getStorage, ref, uploadBytes } from "firebase/storage";
-import { auth, db} from "../firebase"
+import { auth, db } from "../firebase"
 import { collection, doc, setDoc, getDoc, DocumentReference, DocumentData, Timestamp } from "firebase/firestore";
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
@@ -24,6 +24,7 @@ class Post {
     post_date: Timestamp = Timestamp.now();
     location: string = "";
     images: string[] = [];
+    uid: string = "";
 }
 
 const NewPost: NextPage<Props> = () => {
@@ -42,8 +43,9 @@ const NewPost: NextPage<Props> = () => {
         }
     }
 
-    const makeUserPost = async (postsPath: string, uid: string) => {
-        const newDoc = doc(collection(db, postsPath));
+    const makeUserPost = async (schoolid: string, uid: string) => {
+        const newDoc = doc(collection(db, `schools/${schoolid}/posts/`));
+        const postsDoc = doc(collection(db, `schools/${schoolid}/users/${uid}/posts/`), newDoc.id);
 
         const post: Post = {
             description: description,
@@ -51,10 +53,12 @@ const NewPost: NextPage<Props> = () => {
             end_time: Timestamp.fromDate(new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate(), Number(endTime.substring(0, 2)), Number(endTime.substring(3)))),
             post_date: Timestamp.now(),
             location: location,
-            images: images && images instanceof FileList ? Array.from(images).map(file => `images/${uid}/${newDoc.id}/${file.name}`) : []
+            images: images && images instanceof FileList ? Array.from(images).map(file => `images/${uid}/${newDoc.id}/${file.name}`) : [],
+            uid: uid
         };
 
         await setDoc(newDoc, post);
+        await setDoc(postsDoc, post);
 
         if (images && images instanceof FileList) {
             Array.from(images).forEach(file => uploadBytes(ref(storage, `images/${uid}/${newDoc.id}/${file.name}`), file).then((_) => {
@@ -80,7 +84,7 @@ const NewPost: NextPage<Props> = () => {
                 if (schoolSnap.exists()) {
                     console.log("School data:", schoolSnap.data());
 
-                    await makeUserPost(`schools/${schoolSnap.id}/users/${uid}/posts/`, uid);
+                    await makeUserPost(schoolSnap.id, uid);
                 } else {
                     console.log("No such school!");
                 }
@@ -95,30 +99,30 @@ const NewPost: NextPage<Props> = () => {
     return (
         <Layout metadata={metadata}>
             <Navbar currentPage="New Post"/>
-            <h2>New Post</h2>
+            <div className="flex flex-col w-3/4 m-6 font-bold">
+                <h1 className="text-7xl">New Post</h1>
 
-            <label htmlFor="location">Location:</label>
-            <input type="text" id="location" onChange={(e) => setLocation(e.target.value)}/>
+                <input type="text" id="location" placeholder="Where are the item(s) located?" className="text-2xl font-medium p-2" onChange={(e) => setLocation(e.target.value)}/>
 
-            <label htmlFor="description">Description:</label>
-            <input type="textarea" id="description" onChange={(e) => setDescription(e.target.value)}/>
+                <input type="textarea" id="description" placeholder="Give a brief description of the item(s)" className="text-2xl font-medium" onChange={(e) => setDescription(e.target.value)}/>
 
-            <label htmlFor="startDate">Start Date:</label>
-            <Calendar id="startDate" onChange={setStartDate} value={startDate} />
+                <label htmlFor="startDate" className="text-2xl">Start Date:</label>
+                <Calendar id="startDate" onChange={setStartDate} value={startDate} />
 
-            <label htmlFor="startTime">Start Time:</label>
-            <input type="time" id="startTime" onChange={(e) => setStartTime(e.target.value)}/>
+                <label htmlFor="startTime" className="text-2xl">Start Time:</label>
+                <input type="time" id="startTime" onChange={(e) => setStartTime(e.target.value)}/>
 
-            <label htmlFor="endDate">End Date:</label>
-            <Calendar id="endDate" onChange={setEndDate} value={endDate} />
+                <label htmlFor="endDate" className="text-2xl">End Date:</label>
+                <Calendar id="endDate" onChange={setEndDate} value={endDate} />
 
-            <label htmlFor="endTime">End Time:</label>
-            <input type="time" id="endTime" onChange={(e) => setEndTime(e.target.value)}/>
+                <label htmlFor="endTime" className="text-2xl">End Time:</label>
+                <input type="time" id="endTime" onChange={(e) => setEndTime(e.target.value)}/>
 
-            <label htmlFor="images">End Time:</label>
-            <input type="file" id="images" multiple={true} accept="image/png, image/jpeg, image/jpg" onChange={uploadToClient}/>
+                <label htmlFor="images" className="text-2xl">End Time:</label>
+                <input type="file" id="images" multiple={true} accept="image/png, image/jpeg, image/jpg" onChange={uploadToClient}/>
 
-            <button onClick={uploadToServer}>Post</button>
+                <button onClick={uploadToServer}>Post</button>
+            </div>
         </Layout>
     );
 };
