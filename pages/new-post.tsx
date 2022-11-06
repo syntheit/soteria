@@ -30,11 +30,9 @@ class Post {
 const NewPost: NextPage<Props> = () => {
     const [location, setLocation]: [string, Dispatch<SetStateAction<string>>] = useState("");
     const [description, setDescription]: [string, Dispatch<SetStateAction<string>>] = useState("");
-    const [startTime, setStartTime]: [string, Dispatch<SetStateAction<string>>] = useState("");
-    const [endTime, setEndTime]: [string, Dispatch<SetStateAction<string>>] = useState("");
     const [images, setImages] = useState(null) as unknown as [FileList, Dispatch<SetStateAction<FileList>>];
-    const [startDate, setStartDate]: [Date, Dispatch<SetStateAction<Date>>] = useState(new Date());
-    const [endDate, setEndDate]: [Date, Dispatch<SetStateAction<Date>>] = useState(new Date());
+    const [startDate, setStartDate]: [number, Dispatch<SetStateAction<number>>] = useState(0);
+    const [endDate, setEndDate]: [number, Dispatch<SetStateAction<number>>] = useState(0);
 
     const uploadToClient = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
@@ -49,8 +47,8 @@ const NewPost: NextPage<Props> = () => {
 
         const post: Post = {
             description: description,
-            start_time: Timestamp.fromDate(new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate(), Number(startTime.substring(0, 2)), Number(startTime.substring(3)))),
-            end_time: Timestamp.fromDate(new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate(), Number(endTime.substring(0, 2)), Number(endTime.substring(3)))),
+            start_time: Timestamp.fromDate(new Date(startDate)),
+            end_time: Timestamp.fromDate(new Date(endDate)),
             post_date: Timestamp.now(),
             location: location,
             images: images && images instanceof FileList ? Array.from(images).map(file => `images/${uid}/${newDoc.id}/${file.name}`) : [],
@@ -104,26 +102,13 @@ const NewPost: NextPage<Props> = () => {
 
                 <input type="text" id="location" placeholder="Where are the item(s) located?" className="text-2xl font-medium p-2 m-6" onChange={(e) => setLocation(e.target.value)}/>
 
-                <input type="textarea" id="description" placeholder="Give a brief description of the item(s)" className="text-2xl font-medium m-6" onChange={(e) => setDescription(e.target.value)}/>
-
-                <div className="flex flex-row justify-start flex-grow m-6">
-                    <label htmlFor="startDate" className="text-2xl">Start Date:</label>
-                    <Calendar id="startDate" className="m-3" onChange={setStartDate} value={startDate} />
-
-                    <label htmlFor="endDate" className="text-2xl">End Date:</label>
-                    <Calendar id="endDate" className="m-3" onChange={setEndDate} value={endDate} />
-                </div>
+                <textarea rows={4} cols={50} id="description" placeholder="Give a brief description of the item(s)" className="text-2xl font-medium p-2 m-6" onChange={(e) => setDescription(e.target.value)}/>
 
                 <div className="flex flex-row justify-evenly flex-grow m-6">
-                    <label htmlFor="startTime" className="text-2xl">Start Time:</label>
-                    <input type="time" id="startTime" onChange={(e) => setStartTime(e.target.value)}/>
+                    <input type="datetime-local" id="startDate" onChange={(e) => setStartDate(e.timeStamp)}/>
 
-                    <label htmlFor="endTime" className="text-2xl">End Time:</label>
-                    <input type="time" id="endTime" onChange={(e) => setEndTime(e.target.value)}/>
+                    <input type="datetime-local" id="endDate" onChange={(e) => setEndDate(e.timeStamp)}/>
                 </div>
-
-
-
 
                 <label htmlFor="images" className="text-2xl">End Time:</label>
                 <input type="file" id="images" multiple={true} accept="image/png, image/jpeg, image/jpg" onChange={uploadToClient}/>
