@@ -3,7 +3,7 @@ import * as admin from "firebase-admin";
 import * as os from "os";
 const webp = require("webp-converter");
 
-export const convertImg = functions.storage.bucket("gs://clowncar-d0f6a.appspot.com").object()
+export const convertImg = functions.storage.bucket("clowncar-d0f6a.appspot.com").object()
 	.onFinalize((object: functions.storage.ObjectMetadata) => {
 
 	if (object.name === null || object.name === undefined || object.name === "" || object.name?.endsWith(".webp")) {

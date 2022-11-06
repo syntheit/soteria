@@ -1,4 +1,5 @@
 import type { NextPage } from "next";
+import Link from "next/link"
 import Layout from "../components/Layout/Layout";
 import Navbar from "../components/Navbar/Navbar";
 
@@ -46,7 +47,7 @@ const Login: NextPage<Props> = () => {
       />
       <p>{error}</p>
       <button onClick={login}>Login</button>
-      <a href="/register">Create an Account</a>
+      <Link href="/register">Create an Account</Link>
     </Layout>
   );
 };
