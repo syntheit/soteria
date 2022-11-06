@@ -26,7 +26,6 @@ const Post: NextPage<Props> = ({
   images,
 }) => {
   const [imagePaths, setImagePaths] = useState<string[]>();
-  const [test, setTest] = useState<number>(0);
 
   const months = [
     "Jan",
@@ -44,31 +43,24 @@ const Post: NextPage<Props> = ({
   ];
 
   const convertToAmPm = (hours: number, minutes: number): string => {
-    if (hours === 12) return `${hours}:${minutes.toString().padStart(2, '0')} PM`;
-    if (hours > 12) return `${hours - 12}:${minutes.toString().padStart(2, '0')} PM`;
-    if (hours === 0) return `12:${minutes.toString().padStart(2, '0')} AM`;
-    return `${hours}:${minutes.toString().padStart(2, '0')} AM`;
+    if (hours === 12)
+      return `${hours}:${minutes.toString().padStart(2, "0")} PM`;
+    if (hours > 12)
+      return `${hours - 12}:${minutes.toString().padStart(2, "0")} PM`;
+    if (hours === 0) return `12:${minutes.toString().padStart(2, "0")} AM`;
+    return `${hours}:${minutes.toString().padStart(2, "0")} AM`;
   };
 
   useEffect(() => {
-    console.log(`Image length: ${images.length}`);
-    console.log(`imagePaths length: ${imagePaths?.length}`);
     !imagePaths && getImagePaths();
-    console.log(`imagePaths length after push: ${imagePaths?.length}`);
   });
 
   const getImagePaths = () => {
     images.forEach((e) => {
-      console.log(`Iterating: ${e}`);
-      getDownloadURL(ref(storage, e))
-        .then((url) => {
-          console.log(`Pushing ${url}`);
-          if (!imagePaths) setImagePaths([url]);
-          else setImagePaths([...imagePaths, url]);
-        })
-        .catch((error) => {
-          console.log(`Error:::: ${error}`);
-        });
+      getDownloadURL(ref(storage, e)).then((url) => {
+        if (!imagePaths) setImagePaths([url]);
+        else setImagePaths([...imagePaths, url]);
+      });
     });
   };
 
@@ -80,18 +72,27 @@ const Post: NextPage<Props> = ({
       ].join(" ")}
     >
       <div className="flex w-full items-center justify-between">
-        <h2 className="text-5xl font-bold mb-3">{location}</h2>
-        <div className="flex justify-center items-end flex-col">
-          <p>{`${months[start_time.toDate().getMonth()]} ${post_date
-            .toDate()
-            .getDate()}, ${start_time.toDate().getFullYear()}`}</p>
-          <p>{`${convertToAmPm(
-            start_time.toDate().getHours(),
-            start_time.toDate().getMinutes()
-          )} - ${convertToAmPm(
-            end_time.toDate().getHours(),
-            end_time.toDate().getMinutes()
-          )}`}</p>
+        <h2 className="text-5xl font-bold mb-5">{location}</h2>
+        <div className="flex justify-center items-center">
+          <div>
+            <p>{`${months[start_time.toDate().getMonth()]} ${post_date
+              .toDate()
+              .getDate()}, ${start_time.toDate().getFullYear()}`}</p>
+            <p className="text-right">{`${convertToAmPm(
+              start_time.toDate().getHours(),
+              start_time.toDate().getMinutes()
+            )}`}</p>
+          </div>
+          <p className="mx-4 font-bold">-</p>
+          <div>
+            <p>{`${months[start_time.toDate().getMonth()]} ${post_date
+              .toDate()
+              .getDate()}, ${start_time.toDate().getFullYear()}`}</p>
+            <p className="text-right">{`${convertToAmPm(
+              end_time.toDate().getHours(),
+              end_time.toDate().getMinutes()
+            )}`}</p>
+          </div>
         </div>
       </div>
       {imagePaths && (
