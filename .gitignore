@@ -8,3 +8,7 @@ out
 .idea
 /.eslintrc.json
 /firebase.ts
+/firebase-debug.log
+/firestore-debug.log
+/storage.rules
+/ui-debug.log
