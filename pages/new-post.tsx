@@ -106,18 +106,24 @@ const NewPost: NextPage<Props> = () => {
 
                 <input type="textarea" id="description" placeholder="Give a brief description of the item(s)" className="text-2xl font-medium m-6" onChange={(e) => setDescription(e.target.value)}/>
 
+                <div className="flex flex-row justify-start flex-grow m-6">
+                    <label htmlFor="startDate" className="text-2xl">Start Date:</label>
+                    <Calendar id="startDate" className="m-3" onChange={setStartDate} value={startDate} />
 
-                <label htmlFor="startDate" className="text-2xl">Start Date:</label>
-                <Calendar id="startDate" onChange={setStartDate} value={startDate} />
+                    <label htmlFor="endDate" className="text-2xl">End Date:</label>
+                    <Calendar id="endDate" className="m-3" onChange={setEndDate} value={endDate} />
+                </div>
 
-                <label htmlFor="startTime" className="text-2xl">Start Time:</label>
-                <input type="time" id="startTime" onChange={(e) => setStartTime(e.target.value)}/>
+                <div className="flex flex-row justify-evenly flex-grow m-6">
+                    <label htmlFor="startTime" className="text-2xl">Start Time:</label>
+                    <input type="time" id="startTime" onChange={(e) => setStartTime(e.target.value)}/>
 
-                <label htmlFor="endDate" className="text-2xl">End Date:</label>
-                <Calendar id="endDate" onChange={setEndDate} value={endDate} />
+                    <label htmlFor="endTime" className="text-2xl">End Time:</label>
+                    <input type="time" id="endTime" onChange={(e) => setEndTime(e.target.value)}/>
+                </div>
 
-                <label htmlFor="endTime" className="text-2xl">End Time:</label>
-                <input type="time" id="endTime" onChange={(e) => setEndTime(e.target.value)}/>
+
+
 
                 <label htmlFor="images" className="text-2xl">End Time:</label>
                 <input type="file" id="images" multiple={true} accept="image/png, image/jpeg, image/jpg" onChange={uploadToClient}/>
