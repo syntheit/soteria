@@ -10,7 +10,7 @@ import { collection, query, getDocs, setDoc, doc } from "firebase/firestore";
 import Dropdown from "react-dropdown";
 
 const metadata: { title: string; description: string } = {
-  title: "Register | Clowncar",
+  title: "Register | Soteria",
   description: "Create an account",
 };
 

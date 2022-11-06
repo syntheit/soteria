@@ -1,7 +1,7 @@
 import "../styles/globals.scss";
 import type { AppProps } from "next/app";
 
-function Clowncar({ Component, pageProps }: AppProps) {
+function Soteria({ Component, pageProps }: AppProps) {
   return (
     <div>
       <Component {...pageProps} />
@@ -9,4 +9,4 @@ function Clowncar({ Component, pageProps }: AppProps) {
   );
 }
 
-export default Clowncar;
+export default Soteria;

@@ -28,7 +28,7 @@ const Navbar: NextPage<Props> = ({ currentPage }) => {
     <div className="flex items-center flex-col w-full mb-10">
       <div className="flex w-11/12 justify-between items-center h-16">
         <Link href="/" className="ml-10">
-          Clowncar
+          Soteria
         </Link>
         {/* replace with logo */}
         <div className="flex items-center justify-center select-none">

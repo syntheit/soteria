@@ -8,7 +8,7 @@ import { useState } from "react";
 import { auth } from "../firebase";
 
 const metadata: { title: string; description: string } = {
-  title: "Login | Clowncar",
+  title: "Login | Soteria",
   description: "Login or create an account",
 };
 

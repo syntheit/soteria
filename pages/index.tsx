@@ -7,7 +7,7 @@ import Splash from "./splash";
 import { useEffect, useState } from "react";
 
 const metadata: { title: string } = {
-  title: "Clowncar",
+  title: "Soteria",
 };
 
 interface Props {}
