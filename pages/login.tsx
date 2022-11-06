@@ -31,23 +31,27 @@ const Login: NextPage<Props> = () => {
   return (
     <Layout metadata={metadata}>
       <Navbar currentPage="Home" />
-      <input
-        type="email"
-        placeholder="Email"
-        onChange={(e) => {
-          setEmail(e.target.value);
-        }}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        onChange={(e) => {
-          setPassword(e.target.value);
-        }}
-      />
-      <p>{error}</p>
-      <button onClick={login}>Login</button>
-      <Link href="/register">Create an Account</Link>
+        <div className="flex flex-col m-6 p-24 w-1/2 justify-evenly content-center">
+            <input
+                type="email"
+                placeholder="Email"
+                className="text-2xl font-medium m-3 p-2 rounded-md"
+                onChange={(e) => {
+                    setEmail(e.target.value);
+                }}
+            />
+            <input
+                type="password"
+                placeholder="Password"
+                className="text-2xl font-medium m-3 p-2 rounded-md"
+                onChange={(e) => {
+                    setPassword(e.target.value);
+                }}
+            />
+            <p>{error}</p>
+            <button className="text-2xl font-medium m-3 p-2 bg-slate-200 rounded-md hover:bg-slate-400 transition ease-in-out delay-50" onClick={login}>Login</button>
+            <Link href="/register" ><p className="font-medium m-3 content-center cursor-pointer">Create an Account</p></Link>
+        </div>
     </Layout>
   );
 };

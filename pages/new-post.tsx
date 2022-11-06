@@ -5,7 +5,6 @@ import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import { getStorage, ref, uploadBytes } from "firebase/storage";
 import { auth, db } from "../firebase"
 import { collection, doc, setDoc, getDoc, DocumentReference, DocumentData, Timestamp } from "firebase/firestore";
-import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 
 const storage = getStorage();
@@ -31,8 +30,8 @@ const NewPost: NextPage<Props> = () => {
     const [location, setLocation]: [string, Dispatch<SetStateAction<string>>] = useState("");
     const [description, setDescription]: [string, Dispatch<SetStateAction<string>>] = useState("");
     const [images, setImages] = useState(null) as unknown as [FileList, Dispatch<SetStateAction<FileList>>];
-    const [startDate, setStartDate]: [number, Dispatch<SetStateAction<number>>] = useState(0);
-    const [endDate, setEndDate]: [number, Dispatch<SetStateAction<number>>] = useState(0);
+    const [startDate, setStartDate]: [string, Dispatch<SetStateAction<string>>] = useState("");
+    const [endDate, setEndDate]: [string, Dispatch<SetStateAction<string>>] = useState("");
 
     const uploadToClient = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
@@ -104,10 +103,12 @@ const NewPost: NextPage<Props> = () => {
 
                 <textarea rows={4} cols={50} id="description" placeholder="Give a brief description of the item(s)" className="text-2xl font-medium p-2 m-6" onChange={(e) => setDescription(e.target.value)}/>
 
-                <div className="flex flex-row justify-evenly flex-grow m-6">
-                    <input type="datetime-local" id="startDate" onChange={(e) => setStartDate(e.timeStamp)}/>
+                <div className="flex flex-row justify-evenly flex-grow m-6 text-2xl">
+                    <label htmlFor="startDate">Start Time:</label>
+                    <input type="datetime-local" id="startDate" onChange={(e) => setStartDate(e.target.value)}/>
 
-                    <input type="datetime-local" id="endDate" onChange={(e) => setEndDate(e.timeStamp)}/>
+                    <label htmlFor="endDate">End Time:</label>
+                    <input type="datetime-local" id="endDate" onChange={(e) => setEndDate(e.target.value)}/>
                 </div>
 
                 <label htmlFor="images" className="text-2xl">End Time:</label>
