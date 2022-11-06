@@ -6,15 +6,7 @@ import { errors_authentication } from "../constants/Errors";
 import { useEffect, useState } from "react";
 import { auth, db } from "../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import {
-  collection,
-  query,
-  where,
-  getDocs,
-  setDoc,
-  doc,
-  getDoc,
-} from "firebase/firestore";
+import { collection, query, getDocs, setDoc, doc } from "firebase/firestore";
 import Dropdown from "react-dropdown";
 
 const metadata: { title: string; description: string } = {

@@ -31,7 +31,7 @@ const Navbar: NextPage<Props> = ({ currentPage }) => {
           Clowncar
         </Link>
         {/* replace with logo */}
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-center select-none">
           <div className="flex justify-center">
             {links_loggedOut[0].map(({ url, label }) => (
               <Link key={label} href={url}>
