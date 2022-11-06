@@ -1,0 +1,21 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  width: 9rem;
+  height: 2.8rem;
+  border: 5px solid #f67703;
+  background: white;
+  border-radius: 25px;
+  font-weight: 700;
+  &:hover {
+    background: linear-gradient(45deg, #ec9f05, #ff4e00);
+    border: hidden;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    color: white;
+  }
+  &:active {
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  }
+}
