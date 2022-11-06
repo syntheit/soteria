@@ -7,6 +7,7 @@ import { auth, db } from "../firebase"
 import { collection, doc, setDoc, getDoc, DocumentReference, DocumentData, Timestamp } from "firebase/firestore";
 import 'react-calendar/dist/Calendar.css';
 import { storage } from '../firebase'
+import {NextRouter, useRouter} from "next/router";
 
 const metadata: { title: string; defaultDescription: boolean } = {
     title: "New Post",
@@ -31,6 +32,7 @@ const NewPost: NextPage<Props> = () => {
     const [images, setImages] = useState<FileList>();
     const [startDate, setStartDate]: [string, Dispatch<SetStateAction<string>>] = useState("");
     const [endDate, setEndDate]: [string, Dispatch<SetStateAction<string>>] = useState("");
+    const router: NextRouter = useRouter();
 
     const uploadToClient = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
@@ -58,9 +60,11 @@ const NewPost: NextPage<Props> = () => {
 
         if (images instanceof FileList) {
             Array.from(images).forEach(file => uploadBytes(ref(storage, `images/${uid}/${newDoc.id}/${file.name}`), file).then((_) => {
-                console.log('Uploaded a blob or file!');
+
             }));
         }
+
+        await router.push('/');
     }
 
     const uploadToServer = async () => {
@@ -91,12 +95,12 @@ const NewPost: NextPage<Props> = () => {
 
                     <label htmlFor="endDate">End Time:</label>
                     <input type="datetime-local" id="endDate" onChange={(e) => setEndDate(e.target.value)}/>
+
+                    <label htmlFor="images" className="text-2xl">Upload Images:</label>
+                    <input type="file" id="images" multiple={true} accept="image/png, image/jpeg, image/jpg" onChange={uploadToClient}/>
                 </div>
 
-                <label htmlFor="images" className="text-2xl">End Time:</label>
-                <input type="file" id="images" multiple={true} accept="image/png, image/jpeg, image/jpg" onChange={uploadToClient}/>
-
-                <button onClick={uploadToServer}>Post</button>
+                <button className="text-2xl font-medium m-3 p-2 bg-slate-200 rounded-md hover:bg-slate-400 transition ease-in-out delay-50" onClick={uploadToServer}>Post</button>
             </div>
         </Layout>
     );
