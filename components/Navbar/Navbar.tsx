@@ -30,7 +30,7 @@ const Navbar: NextPage<Props> = ({ currentPage }) => {
         <Link href="/">
           <div className="flex items-center cursor-pointer">
             <img className="h-12" src="/favicon-192.png" />
-            <p className="ml-4">Soteria</p>
+            <p className="ml-4 font-bold">Soteria</p>
           </div>
         </Link>
         <div className="flex items-center justify-center select-none">
