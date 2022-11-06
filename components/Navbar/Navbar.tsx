@@ -17,8 +17,9 @@ const Navbar: NextPage<Props> = ({ currentPage }) => {
     })
   );
 
-  const [signedIn, setSignedIn]: [boolean, Dispatch<SetStateAction<boolean>>] =
-    useState(auth.currentUser ? true : false);
+  const [signedIn, setSignedIn] = useState<boolean>(
+    auth.currentUser ? true : false
+  );
 
   const logout = () => {
     auth.signOut();
@@ -35,15 +36,18 @@ const Navbar: NextPage<Props> = ({ currentPage }) => {
         </Link>
         <div className="flex items-center justify-center select-none">
           <div className="flex justify-center">
-            {links_loggedOut[0].map(({ url, label, visibleWhenLoggedIn }) => (
-              visibleWhenLoggedIn && (<Link key={label} href={url}>
-                {currentPage === label ? (
-                  <a className="ml-5 mr-5 font-bold">{label}</a>
-                ) : (
-                  <a className="mr-5 ml-5">{label}</a>
-                )}
-              </Link>)
-            ))}
+            {links_loggedOut[0].map(
+              ({ url, label, visibleWhenLoggedIn }) =>
+                visibleWhenLoggedIn && (
+                  <Link key={label} href={url}>
+                    {currentPage === label ? (
+                      <a className="ml-5 mr-5 font-bold">{label}</a>
+                    ) : (
+                      <a className="mr-5 ml-5">{label}</a>
+                    )}
+                  </Link>
+                )
+            )}
           </div>
           {signedIn && <GlowButton url="/new-post" label="New Post" />}
           <div className="flex justify-center">
