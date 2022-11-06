@@ -30,13 +30,13 @@ const Navbar: NextPage<Props> = ({ currentPage }) => {
           Clowncar
         </Link>
         {/* replace with logo */}
-        <div className="flex justify-center w-11/12 absolute">
+        <div className="flex justify-center">
           {links_loggedOut.map(({ url, label }) => (
             <Link key={label} href={url}>
               {currentPage === label ? (
-                <a className="mr-10 font-bold">{label}</a>
+                <a className="ml-5 mr-5 font-bold">{label}</a>
               ) : (
-                <a className="mr-10">{label}</a>
+                <a className="mr-5 ml-5">{label}</a>
               )}
             </Link>
           ))}
@@ -51,7 +51,9 @@ const Navbar: NextPage<Props> = ({ currentPage }) => {
               </a>
             </div>
           ) : (
-            <Link href="/login">Login</Link>
+            <Link href="/login" className="cursor-pointer">
+              Login
+            </Link>
           )}
         </div>
       </div>

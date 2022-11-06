@@ -46,6 +46,7 @@ const Login: NextPage<Props> = () => {
       />
       <p>{error}</p>
       <button onClick={login}>Login</button>
+      <a href="/register">Create an Account</a>
     </Layout>
   );
 };
