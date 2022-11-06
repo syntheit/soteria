@@ -100,11 +100,12 @@ const NewPost: NextPage<Props> = () => {
         <Layout metadata={metadata}>
             <Navbar currentPage="New Post"/>
             <div className="flex flex-col w-3/4 m-6 font-bold">
-                <h1 className="text-7xl">New Post</h1>
+                <h1 className="text-7xl m-6">New Post</h1>
 
-                <input type="text" id="location" placeholder="Where are the item(s) located?" className="text-2xl font-medium p-2" onChange={(e) => setLocation(e.target.value)}/>
+                <input type="text" id="location" placeholder="Where are the item(s) located?" className="text-2xl font-medium p-2 m-6" onChange={(e) => setLocation(e.target.value)}/>
 
-                <input type="textarea" id="description" placeholder="Give a brief description of the item(s)" className="text-2xl font-medium" onChange={(e) => setDescription(e.target.value)}/>
+                <input type="textarea" id="description" placeholder="Give a brief description of the item(s)" className="text-2xl font-medium m-6" onChange={(e) => setDescription(e.target.value)}/>
+
 
                 <label htmlFor="startDate" className="text-2xl">Start Date:</label>
                 <Calendar id="startDate" onChange={setStartDate} value={startDate} />
