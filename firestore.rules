@@ -8,8 +8,11 @@ service cloud.firestore {
     	allow read: if true;
     }
     match /users/{userUid}{
-    	allow read, write: if request.auth != null && request.auth.id == userUid;
+    	allow read, write: if request.auth != null && request.auth.uid == userUid;
       allow create: if request.auth != null;
+    }
+    match /schools/{schoolId}/users/{userUid}{
+    	allow read, write, create: if request.auth != null && request.auth.uid == userUid;
     }
   }
 }

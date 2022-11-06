@@ -12,6 +12,7 @@ import {
   getDocs,
   setDoc,
   doc,
+  getDoc,
 } from "firebase/firestore";
 import Dropdown from "react-dropdown";
 
@@ -38,6 +39,10 @@ const Register: NextPage<Props> = () => {
           school: schoolId,
           name,
         });
+
+        await setDoc(doc(db, `schools/${schoolId}/users`, user.uid), {
+          name,
+        });
       })
       .catch(({ code }) => {
         setError(code);
@@ -50,7 +55,6 @@ const Register: NextPage<Props> = () => {
     let fetchedSchools: { label: string; value: string }[] = [];
     querySnapshot.forEach((doc) => {
       fetchedSchools.push({ label: doc.data().name, value: doc.id });
-      console.log({ label: doc.data().name, value: doc.id });
     });
     setSchools(fetchedSchools);
   };
@@ -91,7 +95,6 @@ const Register: NextPage<Props> = () => {
           className="bg-slate-200"
           placeholderClassName="bg-white"
           options={schools}
-          value={schools[0]}
           onChange={(e) => {
             setSchoolId(e.value);
           }}
