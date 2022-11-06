@@ -24,11 +24,13 @@ const Navbar: NextPage<Props> = ({ currentPage }) => {
   };
 
   return (
-    <div className="flex flex-col w-full mb-10">
-      <div className="flex items-center justify-between h-16 pr-8 pl-10">
-        <Link href="/" className="w-2/12">Clowncar</Link>
+    <div className="flex items-center flex-col w-full mb-10">
+      <div className="flex w-11/12 justify-between items-center h-16">
+        <Link href="/" className="ml-10">
+          Clowncar
+        </Link>
         {/* replace with logo */}
-        <div className="flex justify-center w-8/12">
+        <div className="flex justify-center w-11/12 absolute">
           {links_loggedOut.map(({ url, label }) => (
             <Link key={label} href={url}>
               {currentPage === label ? (
@@ -39,7 +41,7 @@ const Navbar: NextPage<Props> = ({ currentPage }) => {
             </Link>
           ))}
         </div>
-        <div className="flex justify-end w-2/12">
+        <div className="mr-10">
           {signedIn ? (
             <div className="flex">
               <p className="mr-3">{auth.currentUser?.email}</p>
