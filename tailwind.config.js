@@ -10,6 +10,9 @@ module.exports = {
         post: "40rem",
       },
     },
+    rounded: {
+      post: "20px",
+    },
   },
   plugins: [],
 };

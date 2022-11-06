@@ -23,11 +23,12 @@ const Feed: NextPage<Props> = () => {
       location: string;
       post_date: Timestamp;
       start_time: Timestamp;
+      uid: string;
       images: string[];
     }[]
-  >();
+  >([]);
   const [pageNumber, setPageNumber] = useState<number>();
-  const [schoolId, setSchoolId] = useState<string>();
+  const [schoolId, setSchoolId] = useState<string>("");
   const [error, setError] = useState<string>();
 
   const getLatestPosts = async (interval: number) => {
@@ -40,6 +41,7 @@ const Feed: NextPage<Props> = () => {
       location: string;
       post_date: Timestamp;
       start_time: Timestamp;
+      uid: string;
       images: string[];
     }[] = [];
     querySnapshot.forEach((doc) => {
@@ -49,6 +51,7 @@ const Feed: NextPage<Props> = () => {
         location: doc.data().location,
         post_date: doc.data().post_date,
         start_time: doc.data().start_time,
+        uid: doc.data().uid,
         images: doc.data().images,
       });
     });
@@ -68,8 +71,8 @@ const Feed: NextPage<Props> = () => {
   };
 
   useEffect(() => {
-    !schoolId && getSchoolId();
-    !posts && getLatestPosts(10);
+    schoolId === "" && getSchoolId();
+    schoolId !== "" && posts.length === 0 && getLatestPosts(10);
   });
 
   return error || !posts ? (
@@ -77,7 +80,7 @@ const Feed: NextPage<Props> = () => {
   ) : (
     <div className="flex items-center flex-col w-full">
       {posts.map((post) => (
-        <Post key={`${post.start_time}-${post.end_time}`} {...post} />
+        <Post key={`${post.uid}-${post.post_date}`} {...post} />
       ))}
     </div>
   );
