@@ -1,7 +1,7 @@
 import styles from "./Post.module.scss";
 import { NextPage } from "next";
-import { Timestamp } from "firebase/firestore";
-import { storage } from "../../firebase";
+import { collection, doc, getDoc, query, Timestamp } from "firebase/firestore";
+import { db, storage } from "../../firebase";
 import { getDownloadURL, ref } from "firebase/storage";
 import { useEffect, useState } from "react";
 import Carousel from "nuka-carousel";
@@ -26,6 +26,7 @@ const Post: NextPage<Props> = ({
   images,
 }) => {
   const [imagePaths, setImagePaths] = useState<string[]>();
+  const [authorName, setAuthorName] = useState<string>();
 
   const months = [
     "Jan",
@@ -53,7 +54,15 @@ const Post: NextPage<Props> = ({
 
   useEffect(() => {
     !imagePaths && getImagePaths();
+    !authorName && getAuthorName();
   });
+
+  const getAuthorName = async () => {
+    const docRef = doc(db, "users", uid);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) setAuthorName(docSnap.data().name);
+  };
 
   const getImagePaths = () => {
     images.forEach((e) => {
@@ -72,7 +81,10 @@ const Post: NextPage<Props> = ({
       ].join(" ")}
     >
       <div className="flex w-full items-center justify-between">
-        <h2 className="text-5xl font-bold mb-5">{location}</h2>
+        <div className="mb-4">
+          <h2 className="text-5xl font-bold mb-4">{location}</h2>
+          <h3 className="text-xl">{authorName}</h3>
+        </div>
         <div className="flex justify-center items-center">
           <div>
             <p>{`${months[start_time.toDate().getMonth()]} ${post_date

@@ -30,3 +30,15 @@ export const index = {
   },
   additionalLinkTags,
 };
+
+export const tutorial = {
+  title: "Electronics Recycling Guide | Soteria",
+  description,
+  openGraph: {
+    url: "https://www.soteria.matv.io/tutorial",
+    title: "Electronics Recycling Guide | Soteria",
+    description: "How to give a second life to unused electronics",
+    site_name: "Soteria",
+  },
+  additionalLinkTags,
+};
