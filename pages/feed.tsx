@@ -33,7 +33,7 @@ const Feed: NextPage<Props> = () => {
 
   const getLatestPosts = async (interval: number) => {
     const postsRef = query(collection(db, `schools/${schoolId}/posts`));
-    const q = query(postsRef, orderBy("post_date"), limit(interval));
+    const q = query(postsRef, orderBy("post_date", "desc"), limit(interval));
     const querySnapshot = await getDocs(q);
     let fetchedPosts: {
       description: string;

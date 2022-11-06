@@ -58,8 +58,8 @@ const Navbar: NextPage<Props> = ({ currentPage }) => {
             ))}
           </div>
           {signedIn && (
-            <Link href={`${auth.currentUser?.uid}/posts`}>
-              {currentPage === "posts" ? (
+            <Link href={`/my-posts`}>
+              {currentPage === "my-posts" ? (
                 <a className="ml-5 mr-5 font-bold">My Posts</a>
               ) : (
                 <a className="mr-5 ml-5">My Posts</a>

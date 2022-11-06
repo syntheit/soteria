@@ -60,7 +60,7 @@ const Post: NextPage<Props> = ({
       getDownloadURL(ref(storage, e)).then((url) => {
         if (!imagePaths) setImagePaths([url]);
         else setImagePaths([...imagePaths, url]);
-      });
+      }).catch(_ => {});
     });
   };
 
