@@ -35,14 +35,14 @@ const Navbar: NextPage<Props> = ({ currentPage }) => {
         </Link>
         <div className="flex items-center justify-center select-none">
           <div className="flex justify-center">
-            {links_loggedOut[0].map(({ url, label }) => (
-              <Link key={label} href={url}>
+            {links_loggedOut[0].map(({ url, label, visibleWhenLoggedIn }) => (
+              visibleWhenLoggedIn && (<Link key={label} href={url}>
                 {currentPage === label ? (
                   <a className="ml-5 mr-5 font-bold">{label}</a>
                 ) : (
                   <a className="mr-5 ml-5">{label}</a>
                 )}
-              </Link>
+              </Link>)
             ))}
           </div>
           {signedIn && <GlowButton url="/new-post" label="New Post" />}
