@@ -40,7 +40,6 @@ const MyPosts: NextPage<Props> = () => {
     const postsRef = query(
       collection(db, `schools/${schoolId}/users/${auth.currentUser.uid}/posts`)
     );
-    // const docRef = doc(db, `schools/${schoolId}/users/${auth.currentUser.uid}`);
     const q = query(postsRef, orderBy("post_date", "desc"), limit(interval));
     const querySnapshot = await getDocs(q);
     let fetchedPosts: {

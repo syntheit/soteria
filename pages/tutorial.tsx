@@ -16,7 +16,7 @@ const Home: NextPage<Props> = () => {
         </h1>
         <div className="flex items-center justify-center flex-col">
           {tutorialText.map(({ title, description }) => (
-            <div className="flex items-center justify-center flex-col mb-5">
+            <div key={title} className="flex items-center justify-center flex-col mb-5">
               <h2 className="text-2xl font-bold">{title}</h2>
               <p className="text-xl">{description}</p>
             </div>
