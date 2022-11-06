@@ -63,7 +63,7 @@ const Feed: NextPage<Props> = () => {
     if (docSnap.exists()) {
       setSchoolId(docSnap.data().school);
     } else {
-      setError("Error occured while getting student ID");
+      setError("Error occured while getting school ID");
     }
   };
 
@@ -73,7 +73,7 @@ const Feed: NextPage<Props> = () => {
   });
 
   return error || !posts ? (
-    <p>{error}</p>
+    <p>Error: {error}</p>
   ) : (
     <div className="flex items-center flex-col w-full">
       {posts.map((post) => (

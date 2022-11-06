@@ -60,6 +60,9 @@ const Post: NextPage<Props> = ({
           )}`}</p>
         </div>
       </div>
+      <div>
+        {}
+      </div>
       <h3 className="mt-6">{description}</h3>
     </div>
   );

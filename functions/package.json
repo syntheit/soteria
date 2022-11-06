@@ -14,10 +14,6 @@
   },
   "main": "lib/index.js",
   "dependencies": {
-    "firebase": "^9.13.0",
-    "firebase-admin": "^10.2.0",
-    "firebase-functions": "^4.0.2",
-    "webp-converter": "^2.3.3"
   },
   "devDependencies": {
     "typescript": "^4.6.4"
