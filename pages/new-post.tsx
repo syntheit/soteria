@@ -15,8 +15,7 @@ const metadata: { title: string; defaultDescription: boolean } = {
     defaultDescription: true,
 };
 
-interface Props {
-}
+interface Props {}
 
 class Post {
     description: string = "";
