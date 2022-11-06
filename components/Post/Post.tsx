@@ -44,10 +44,10 @@ const Post: NextPage<Props> = ({
   ];
 
   const convertToAmPm = (hours: number, minutes: number): string => {
-    if (hours === 12) return `${hours}:${minutes.toString().padStart(2)} PM`;
-    if (hours > 12) return `${hours - 12}:${minutes.toString().padStart(2)} PM`;
-    return `${hours}:${minutes.toString().padStart(2)} AM`;
-    // return hours >= 12 ? `${hours - 12} PM` : `${hours > 0 ? hours : 12} AM`;
+    if (hours === 12) return `${hours}:${minutes.toString().padStart(2, '0')} PM`;
+    if (hours > 12) return `${hours - 12}:${minutes.toString().padStart(2, '0')} PM`;
+    if (hours === 0) return `12:${minutes.toString().padStart(2, '0')} AM`;
+    return `${hours}:${minutes.toString().padStart(2, '0')} AM`;
   };
 
   useEffect(() => {
