@@ -88,6 +88,9 @@ const Post: NextPage<Props> = ({
           <p>{`${convertToAmPm(
             start_time.toDate().getHours(),
             start_time.toDate().getMinutes()
+          )} - ${convertToAmPm(
+            end_time.toDate().getHours(),
+            end_time.toDate().getMinutes()
           )}`}</p>
         </div>
       </div>
