@@ -25,8 +25,8 @@ const Post: NextPage<Props> = ({
   uid,
   images,
 }) => {
-  const [imagePaths, setImagePaths] = useState<string[]>();
   const [authorName, setAuthorName] = useState<string>();
+  const [displayImages, setDisplayImages] = useState<boolean>(false);
 
   const months = [
     "Jan",
@@ -53,24 +53,18 @@ const Post: NextPage<Props> = ({
   };
 
   useEffect(() => {
-    !imagePaths && getImagePaths();
     !authorName && getAuthorName();
+    console.log(`Image length is ${images.length}`);
+    if (images.length > 0) {
+      setDisplayImages(true);
+      console.log("Setting display images to true");
+    }
   });
 
   const getAuthorName = async () => {
     const docRef = doc(db, "users", uid);
     const docSnap = await getDoc(docRef);
-
     if (docSnap.exists()) setAuthorName(docSnap.data().name);
-  };
-
-  const getImagePaths = () => {
-    images.forEach((e) => {
-      getDownloadURL(ref(storage, e)).then((url) => {
-        if (!imagePaths) setImagePaths([url]);
-        else setImagePaths([...imagePaths, url]);
-      }).catch(_ => {});
-    });
   };
 
   return (
@@ -107,9 +101,9 @@ const Post: NextPage<Props> = ({
           </div>
         </div>
       </div>
-      {imagePaths && (
+      {displayImages && (
         <Carousel className="flex justify-center items-center">
-          {imagePaths.map((path) => (
+          {images.map((path) => (
             <img
               src={path}
               key={path}

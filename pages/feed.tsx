@@ -10,8 +10,9 @@ import {
   limit,
   Timestamp,
 } from "firebase/firestore";
-import { auth, db } from "../firebase";
+import { auth, db, storage } from "../firebase";
 import Post from "../components/Post/Post";
+import { getDownloadURL, ref } from "firebase/storage";
 
 interface Props {}
 
@@ -27,6 +28,7 @@ const Feed: NextPage<Props> = () => {
       images: string[];
     }[]
   >([]);
+  const [rerender, setRerender] = useState<number>(0);
   const [pageNumber, setPageNumber] = useState<number>();
   const [schoolId, setSchoolId] = useState<string>("");
   const [error, setError] = useState<string>();
@@ -52,10 +54,22 @@ const Feed: NextPage<Props> = () => {
         post_date: doc.data().post_date,
         start_time: doc.data().start_time,
         uid: doc.data().uid,
-        images: doc.data().images,
+        images: getImagePaths(doc.data().images),
       });
     });
     setPosts(fetchedPosts);
+  };
+
+  const getImagePaths = (images: string[]) => {
+    let imagePathsArray: string[] = [];
+    images.forEach((e) => {
+      getDownloadURL(ref(storage, e))
+        .then((url) => {
+          imagePathsArray.push(url);
+        })
+        .catch((_) => {});
+    });
+    return imagePathsArray;
   };
 
   const getSchoolId = async () => {
@@ -79,6 +93,13 @@ const Feed: NextPage<Props> = () => {
     <p>Error: {error}</p>
   ) : (
     <div className="flex items-center flex-col w-full">
+      <button
+        onClick={() =>
+          setRerender((currentCount) => {
+            return currentCount + 1;
+          })
+        }
+      >Render Images</button>
       {posts.map((post) => (
         <Post key={`${post.uid}-${post.post_date}`} {...post} />
       ))}
