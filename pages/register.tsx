@@ -25,14 +25,14 @@ const Register: NextPage<Props> = () => {
   const passwordRef = useRef<HTMLInputElement>(null);
   const signupKeyRef = useRef<HTMLInputElement>(null);
   const nameRef = useRef<HTMLInputElement>(null);
-  const schoolIdRef = useRef<any>(null); // figure out the correct ref type for dropdown menu... might use another implementation later anyways
 
+  const [schoolId, setSchoolId] = useState<string>("");
   const [error, setError] = useState<string>("");
   const [schools, setSchools] = useState<{ label: string; value: string }[]>();
   const router = useRouter();
 
   const create = () => {
-    if (!schoolIdRef.current) return;
+    if (!schoolId) return;
     if (!emailRef.current) {
       setError("Invalid email");
       return;
@@ -50,6 +50,7 @@ const Register: NextPage<Props> = () => {
       return;
     }
     const name = nameRef.current.value;
+
     // remove the questionmarks from lines 60 and 64 since the check above should eliminate the need for those
 
     createUserWithEmailAndPassword(
@@ -60,15 +61,12 @@ const Register: NextPage<Props> = () => {
       .then(async (userCredential) => {
         const user = userCredential.user;
         await setDoc(doc(db, "users", user.uid), {
-          school: schoolIdRef.current.value,
+          school: schoolId,
           name,
         });
-        await setDoc(
-          doc(db, `schools/${schoolIdRef.current.value}/users`, user.uid),
-          {
-            name,
-          }
-        );
+        await setDoc(doc(db, `schools/${schoolId}/users`, user.uid), {
+          name,
+        });
         await router.push("/");
       })
       .catch(({ code }) => {
@@ -80,13 +78,11 @@ const Register: NextPage<Props> = () => {
   const getSchools = async () => {
     const q = query(collection(db, "schools"));
     const querySnapshot = await getDocs(q);
-    let fetchedSchools: { label: string; value: string; className: string }[] =
-      [];
+    let fetchedSchools: { label: string; value: string }[] = [];
     querySnapshot.forEach((doc) => {
       fetchedSchools.push({
         label: doc.data().name,
         value: doc.id,
-        className: "hover:bg-slate-100",
       });
     });
     setSchools(fetchedSchools);
@@ -133,11 +129,14 @@ const Register: NextPage<Props> = () => {
           </p>
         )}
         {schools && (
+          // find something else for the dropdown (and use refs)
           <Dropdown
             className="text-2xl font-medium m-3 p-2 rounded-md bg-white hover:bg-slate-200 transition ease-in-out delay-50 cursor-pointer"
             placeholderClassName=""
             options={schools}
-            ref={schoolIdRef}
+            onChange={(e) => {
+              setSchoolId(e.value);
+            }}
             placeholder="Select a school"
           />
         )}
