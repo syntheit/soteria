@@ -1,8 +1,7 @@
 import type { NextPage } from "next";
 import Layout from "../components/Layout/Layout";
-import Navbar from "../components/Navbar/Navbar";
 import { errors_authentication } from "../constants/Errors";
-import { NextRouter, useRouter } from "next/router";
+import { useRouter } from "next/router";
 
 import { useEffect, useRef, useState } from "react";
 import { auth, db, signup_key } from "../firebase";
@@ -99,8 +98,8 @@ const Register: NextPage<Props> = () => {
 
   return (
     <Layout metadata={metadata}>
-      <Navbar currentPage="Home" />
       <div className="flex flex-col m-6 p-24 w-1/2 justify-evenly content-center">
+        <h1 className="text-white text-5xl font-bold m-3">Create an account</h1>
         <input
           type="text"
           placeholder="First and last name"
@@ -126,14 +125,16 @@ const Register: NextPage<Props> = () => {
           ref={signupKeyRef}
         />
         {/* dropdown with current schools */}
-        <p className="font-medium m-3 content-center">
-          {errors_authentication[error]
-            ? "ERROR: " + errors_authentication[error]
-            : error}
-        </p>
+        {error && (
+          <p className="font-medium m-3 content-center text-white">
+            {errors_authentication[error]
+              ? "ERROR: " + errors_authentication[error]
+              : error}
+          </p>
+        )}
         {schools && (
           <Dropdown
-            className="text-2xl font-medium m-3 p-2 rounded-md hover:bg-slate-200 transition ease-in-out delay-50 cursor-pointer"
+            className="text-2xl font-medium m-3 p-2 rounded-md bg-white hover:bg-slate-200 transition ease-in-out delay-50 cursor-pointer"
             placeholderClassName=""
             options={schools}
             ref={schoolIdRef}

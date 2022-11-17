@@ -13,7 +13,6 @@ import {
 import { auth, db } from "../firebase";
 import Post from "../components/Post/Post";
 import { index } from "../constants/metadata";
-import Navbar from "../components/Navbar/Navbar";
 import Layout from "../components/Layout/Layout";
 
 interface Props {}
@@ -31,6 +30,7 @@ const MyPosts: NextPage<Props> = () => {
     }[]
   >([]);
   const [pageNumber, setPageNumber] = useState<number>();
+  const [rerender, setRerender] = useState<number>(0);
   const [schoolId, setSchoolId] = useState<string>("");
   const [error, setError] = useState<string>();
 
@@ -86,8 +86,17 @@ const MyPosts: NextPage<Props> = () => {
     <p>Error: {error}</p>
   ) : (
     <Layout metadata={index}>
-      <Navbar currentPage="Home" />
-      <div className="flex items-center flex-col w-full">
+      <button
+        onClick={() =>
+          setRerender((currentCount) => {
+            return currentCount + 1;
+          })
+        }
+        className="text-white mb-8 absolute top-2 left-80"
+      >
+        Render Images
+      </button>
+      <div className="flex items-center justify-center w-full overflow-y-auto flex-wrap">
         {posts.map((post) => (
           <Post key={`${post.uid}-${post.post_date}`} {...post} />
         ))}

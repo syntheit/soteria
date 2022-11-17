@@ -4,7 +4,7 @@ interface Props {}
 
 const Splash: NextPage<Props> = () => {
   return (
-    <div className="flex flex-col justify-center items-center w-6/12">
+    <div className="flex flex-col justify-center items-center w-6/12 text-white">
       <h1 className="text-7xl font-bold mb-5">Soteria</h1>
       <h2 className="text-2xl leading-10 text-center">
         Named after the ancient Greek Goddess of Preservation, Soteria acts as a

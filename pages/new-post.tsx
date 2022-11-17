@@ -1,6 +1,5 @@
 import type { NextPage } from "next";
 import Layout from "../components/Layout/Layout";
-import Navbar from "../components/Navbar/Navbar";
 import { ChangeEvent, Dispatch, SetStateAction, useRef, useState } from "react";
 import { getStorage, ref, uploadBytes } from "firebase/storage";
 import { auth, db } from "../firebase";
@@ -105,8 +104,7 @@ const NewPost: NextPage<Props> = () => {
 
   return (
     <Layout metadata={metadata}>
-      <Navbar currentPage="New Post" />
-      <div className="flex flex-col w-3/4 m-6 font-bold">
+      <div className="flex flex-col w-3/4 m-6 font-bold text-white">
         <h1 className="text-5xl m-6 font-bold">New Post</h1>
         <input
           type="text"
