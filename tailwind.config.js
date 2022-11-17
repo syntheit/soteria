@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+
 module.exports = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx}",
@@ -9,9 +10,17 @@ module.exports = {
       height: {
         post: "40rem",
       },
-    },
-    rounded: {
-      post: "20px",
+      colors: {
+        "sot-bg": "#041C32",
+        "sot-2": "#06283D",
+        "sot-3": "#064663",
+        "sot-focus": "#DA0037",
+        hov: "#1a1a1a",
+        active: "#787878",
+      },
+      rounded: {
+        post: "20px",
+      },
     },
   },
   plugins: [],
