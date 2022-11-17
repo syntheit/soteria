@@ -1,12 +1,11 @@
 import styles from "./Post.module.scss";
 import { NextPage } from "next";
-import { collection, doc, getDoc, query, Timestamp } from "firebase/firestore";
-import { db, storage } from "../../firebase";
-import { getDownloadURL, ref } from "firebase/storage";
+import { doc, getDoc, Timestamp } from "firebase/firestore";
+import { db } from "../../firebase";
 import { useEffect, useState } from "react";
 import Carousel from "nuka-carousel";
 
-interface Props {
+type Props = {
   description: string;
   end_time: Timestamp;
   location: string;
@@ -14,7 +13,7 @@ interface Props {
   start_time: Timestamp;
   uid: string;
   images: string[];
-}
+};
 
 const Post: NextPage<Props> = ({
   description,
@@ -70,49 +69,57 @@ const Post: NextPage<Props> = ({
   return (
     <div
       className={[
-        "flex flex-col w-8/12 h-post mb-20 p-7",
+        "flex justify-between flex-col w-[38rem] mb-14 mx-8 p-10 border-sot-focus border-2 border-solid text-slate-50	",
         styles.post_shadow,
       ].join(" ")}
     >
-      <div className="flex w-full items-center justify-between">
-        <div className="mb-4">
-          <h2 className="text-5xl font-bold mb-4">{location}</h2>
-          <h3 className="text-xl">{authorName}</h3>
+      <div>
+        <div className="flex w-full items-center justify-between">
+          <div className="mb-4">
+            <h2 className="text-3xl font-bold mb-3">{location}</h2>
+            <h3 className="text-lg">{authorName}</h3>
+          </div>
         </div>
-        <div className="flex justify-center items-center">
-          <div>
-            <p>{`${months[start_time.toDate().getMonth()]} ${post_date
+        {displayImages && (
+          <Carousel className="flex justify-center items-center">
+            {images.map((path) => (
+              <img
+                src={path}
+                key={path}
+                className="h-72 rounded-lg rounded-post"
+              />
+            ))}
+          </Carousel>
+        )}
+        <h3 className="mt-6 mb-6 text-xl">{description}</h3>
+      </div>
+      <div className="flex items-center">
+        <div className="flex">
+          <p>
+            {`${months[start_time.toDate().getMonth()]} ${post_date
               .toDate()
-              .getDate()}, ${start_time.toDate().getFullYear()}`}</p>
-            <p className="text-right">{`${convertToAmPm(
-              start_time.toDate().getHours(),
-              start_time.toDate().getMinutes()
-            )}`}</p>
-          </div>
-          <p className="mx-4 font-bold">-</p>
-          <div>
-            <p>{`${months[start_time.toDate().getMonth()]} ${post_date
+              .getDate()}, ${start_time.toDate().getFullYear()}`}
+            ,&nbsp;&nbsp;
+          </p>
+          <p className="text-right">{`${convertToAmPm(
+            start_time.toDate().getHours(),
+            start_time.toDate().getMinutes()
+          )}`}</p>
+        </div>
+        <p className="mx-4 font-bold">-</p>
+        <div className="flex">
+          <p>
+            {`${months[start_time.toDate().getMonth()]} ${post_date
               .toDate()
-              .getDate()}, ${start_time.toDate().getFullYear()}`}</p>
-            <p className="text-right">{`${convertToAmPm(
-              end_time.toDate().getHours(),
-              end_time.toDate().getMinutes()
-            )}`}</p>
-          </div>
+              .getDate()}, ${start_time.toDate().getFullYear()}`}
+            ,&nbsp;&nbsp;
+          </p>
+          <p className="text-right">{`${convertToAmPm(
+            end_time.toDate().getHours(),
+            end_time.toDate().getMinutes()
+          )}`}</p>
         </div>
       </div>
-      {displayImages && (
-        <Carousel className="flex justify-center items-center">
-          {images.map((path) => (
-            <img
-              src={path}
-              key={path}
-              className="h-72 rounded-lg rounded-post"
-            />
-          ))}
-        </Carousel>
-      )}
-      <h3 className="mt-6 text-xl">{description}</h3>
     </div>
   );
 };
