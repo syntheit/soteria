@@ -3,19 +3,21 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  width: 9rem;
-  height: 2.8rem;
-  border: 5px solid #f67703;
-  background: white;
-  border-radius: 25px;
+  width: 85%;
+  height: 3.1rem;
+  border: 2px solid #da0037;
+  background: transparent;
+  border-radius: 200px;
   font-weight: 700;
+  transition: all ease-in-out 300ms;
+  user-select: none;
   &:hover {
-    background: linear-gradient(45deg, #ec9f05, #ff4e00);
+    background: linear-gradient(45deg, #ff4e00, #da0037);
+    transition: all ease-in-out 300ms;
     border: hidden;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    color: white;
   }
   &:active {
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0px 10px 22px -18px rgba(0, 0, 0, 1);
+    transform: translateY(2px);
   }
 }
