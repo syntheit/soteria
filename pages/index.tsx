@@ -1,6 +1,5 @@
 import type { NextPage } from "next";
 import Layout from "../components/Layout/Layout";
-import Navbar from "../components/Navbar/Navbar";
 import Feed from "../pages/feed";
 import { auth } from "../firebase";
 import Splash from "./splash";
@@ -19,10 +18,8 @@ const Home: NextPage<Props> = () => {
 
   return (
     <Layout metadata={index}>
-      <Navbar currentPage="Home" />
       {signedIn === 1 && <Feed />}
       {signedIn === 0 && <Splash />}
-      {signedIn === -1 && <p>Loading...</p>}
     </Layout>
   );
 };
