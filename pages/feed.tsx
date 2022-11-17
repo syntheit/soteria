@@ -29,7 +29,7 @@ const Feed: NextPage<Props> = () => {
     }[]
   >([]);
   const [rerender, setRerender] = useState<number>(0);
-  const [pageNumber, setPageNumber] = useState<number>();
+  const [pageNumber, setPageNumber] = useState<number>(); // have useeffect on pagenumber to update feed
   const [schoolId, setSchoolId] = useState<string>("");
   const [error, setError] = useState<string>();
 
@@ -92,18 +92,23 @@ const Feed: NextPage<Props> = () => {
   return error || !posts ? (
     <p>Error: {error}</p>
   ) : (
-    <div className="flex items-center flex-col w-full">
+    <>
       <button
         onClick={() =>
           setRerender((currentCount) => {
             return currentCount + 1;
           })
         }
-      >Render Images</button>
-      {posts.map((post) => (
-        <Post key={`${post.uid}-${post.post_date}`} {...post} />
-      ))}
-    </div>
+        className="text-white mb-8 absolute top-2 left-80"
+      >
+        Render Images
+      </button>
+      <div className="flex items-center justify-center w-full overflow-y-auto flex-wrap">
+        {posts.map((post) => (
+          <Post key={`${post.uid}-${post.post_date}`} {...post} />
+        ))}
+      </div>
+    </>
   );
 };
 
