@@ -26,8 +26,24 @@
   font-weight: 1 999;
   font-style: italic;
 }
-body, html {
+@font-face {
+  font-family: "Caveat";
+  src: url("../public/fonts/Caveat-VariableFont_wght.ttf")
+    format("truetype-variations");
+  font-weight: 1 999;
+}
+body,
+html {
   font-family: Mulish;
   height: 100vh;
   background-color: #000;
+}
+
+@layer utilities {
+  .soteriaTextGradient {
+    background: -webkit-linear-gradient(#ff4e00, #da0037);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 }

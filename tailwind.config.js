@@ -7,6 +7,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        caveat: ["caveat"],
+      },
       height: {
         post: "40rem",
       },

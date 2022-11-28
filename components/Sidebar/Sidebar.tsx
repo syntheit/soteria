@@ -34,11 +34,16 @@ const Sidebar: NextPage<Props> = () => {
     auth.signOut();
   };
 
+  // collapse sidebar after certain width
+
   return (
-    <div className="flex w-[18%] items-center justify-center p-5 box-border border-r-white border-[1px] border-solid select-none">
+    <div className="flex w-[22rem] items-center justify-center p-5 box-border border-r-white border-[1px] border-solid select-none">
       <div className="flex flex-col justify-between h-full w-full">
         <div>
-          <h2 className="text-white mb-5 text-2xl font-bold ml-4">Soteria</h2>
+          {/* <h1 className="text-9xl font-bold mb-5 font-caveat soteriaTextGradient w-full text-center">
+            Soteria
+          </h1> */}
+          <h2 className="text-white mb-5 text-2xl font-bold ml-4 soteriaTextGradient">Soteria</h2>
           <div className="flex flex-col items-center text-white">
             <div className="w-full">
               {links.map(
@@ -54,7 +59,7 @@ const Sidebar: NextPage<Props> = () => {
                     (!show_only_when_logged_in &&
                       !show_only_when_logged_out)) && (
                     <Link key={label} href={url}>
-                      {/* bold if current page */}
+                      {/* bold text and increase stroke width (should probably switch to exclusively tabler icons in that case) if current page */}
                       <div className="flex items-center mb-3 pointer cursor-pointer">
                         <div className="flex items-center hover:bg-hov rounded-full py-2 px-4 transition ease-in-out duration-300">
                           {icon_name && (
